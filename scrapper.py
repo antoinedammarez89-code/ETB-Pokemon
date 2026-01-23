@@ -10,7 +10,8 @@ CSV_FILE = "carrefour_pokemon_filtered.csv"
 MAX_PRICE = 60
 INTERVAL_MINUTES = 30
 
-DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1460333627526221846/t8pcnnbrE-JyiZHxyzImLlzINTRe92bmwRdUIKHfADsla2dZBFmO_nb4nr9QbVn_S-_3"
+import os
+DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
 def send_discord_report(products):
     if not products:
@@ -129,3 +130,4 @@ if __name__ == "__main__":
     produits = scrape_carrefour_fast(SEARCH_QUERY)
     export_csv(produits)
     send_discord_report(produits)
+
