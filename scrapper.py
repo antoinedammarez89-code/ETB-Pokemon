@@ -126,11 +126,6 @@ def export_csv(data):
         writer.writerows(data)
 
 if __name__ == "__main__":
-    while True:
-        print("=== Scan Carrefour Pokémon ===")
-        produits = scrape_carrefour_fast(SEARCH_QUERY)
-        print("Produits trouvés :", len(produits))
-        export_csv(produits)
-        send_discord_report(produits)
-        print(f"Pause {INTERVAL_MINUTES} minutes...\n")
-        time.sleep(INTERVAL_MINUTES * 60)
+    produits = scrape_carrefour_fast(SEARCH_QUERY)
+    export_csv(produits)
+    send_discord_report(produits)
