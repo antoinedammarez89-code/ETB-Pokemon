@@ -15,10 +15,7 @@ DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
 def send_discord_report(products):
     if not products:
-        message = (
-            "🛒 **Carrefour Pokémon – Scan terminé**\n"
-            "❌ Aucun produit trouvé sous 60 €.\n\n"
-            f"🔎 Recherche : {SEARCH_QUERY}"
+        return  # ⛔ ne rien envoyer du tout
         )
     else:
         message = (
@@ -130,4 +127,5 @@ if __name__ == "__main__":
     produits = scrape_carrefour_fast(SEARCH_QUERY)
     export_csv(produits)
     send_discord_report(produits)
+
 
