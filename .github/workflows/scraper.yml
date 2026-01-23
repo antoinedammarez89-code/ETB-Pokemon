@@ -2,8 +2,8 @@ name: Carrefour Pokémon Scraper
 
 on:
   schedule:
-    - cron: "*/30 * * * *"   # toutes les 30 minutes
-  workflow_dispatch:        # lancement manuel possible
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
 
 jobs:
   scrape:
@@ -25,3 +25,5 @@ jobs:
 
       - name: 🚀 Run scraper
         run: python scraper.py
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
