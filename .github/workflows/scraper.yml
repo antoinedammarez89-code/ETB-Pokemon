@@ -1,8 +1,8 @@
 name: Carrefour Pokémon Scraper
 
 on:
-  repository_dispatch:
-    types: [run-scraper]
+  schedule:
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 jobs:
