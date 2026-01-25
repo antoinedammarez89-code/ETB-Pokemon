@@ -6,7 +6,8 @@ import traceback
 SEARCH_URL = "https://www.e.leclerc/recherche?q=Coffret%20Dresseur%20d%27Elite%20pokemon#seller_list=group::E.Leclerc"
 SEARCH_QUERY = "Coffret Dresseur d'Elite pokemon"
 MAX_PRICE = 60
-DISCORD_WEBHOOK = "TON_WEBHOOK_ICI"
+import os
+DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
 keywords = [w.lower().replace("'", "") for w in SEARCH_QUERY.split()]
 
