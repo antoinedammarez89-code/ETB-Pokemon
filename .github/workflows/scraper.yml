@@ -30,5 +30,6 @@ jobs:
             python scrapercarrefour.py
             python scraperauchan.py
             python scraperleclerc.py
+            python scrapermicromania.py
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
