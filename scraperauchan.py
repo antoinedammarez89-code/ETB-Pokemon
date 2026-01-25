@@ -7,7 +7,8 @@ import traceback
 SEARCH_QUERY = "Coffret Dresseur d'Elite pokemon"
 MAX_PRICE = 60
 CSV_FILE = "auchan_pokemon_filtered.csv"
-DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1460333627526221846/t8pcnnbrE-JyiZHxyzImLlzINTRe92bmwRdUIKHfADsla2dZBFmO_nb4nr9QbVn_S-_3"  # ← mets ton webhook Discord ici
+import os
+DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
 keywords = [w.lower() for w in SEARCH_QUERY.split()]
 
