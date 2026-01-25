@@ -29,5 +29,6 @@ jobs:
         run: |
             python scrapercarrefour.py
             python scraperauchan.py
+            python scraperleclerc.py
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
