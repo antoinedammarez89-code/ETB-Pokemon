@@ -1,12 +1,10 @@
 from playwright.sync_api import sync_playwright
-import csv
 import time
 import requests
 import traceback
 
 SEARCH_QUERY = "Coffret cartes Pokémon Dresseur d'Elite"
 SEARCH_URL = "https://www.carrefour.fr/s?q=Coffret+cartes+Pokémon+Dresseur+d'Elite"
-CSV_FILE = "carrefour_pokemon_filtered.csv"
 MAX_PRICE = 60
 INTERVAL_MINUTES = 30
 
@@ -114,18 +112,6 @@ def scrape_carrefour_fast(search_query):
 
     return results
 
-def export_csv(data):
-    if not data:
-        return
-    with open(CSV_FILE, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["nom", "prix", "url"])
-        writer.writeheader()
-        writer.writerows(data)
-
 if __name__ == "__main__":
     produits = scrape_carrefour_fast(SEARCH_QUERY)
-    export_csv(produits)
     send_discord_report(produits)
-
-
-
