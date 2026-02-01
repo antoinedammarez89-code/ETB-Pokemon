@@ -8,7 +8,6 @@ import os
 # ---------------- CONFIG ----------------
 SEARCH_QUERY = "Coffret Dresseur d'Elite pokemon"
 MAX_PRICE = 60
-CSV_FILE = "micromania_pokemon_filtered.csv"
 DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
 # Normalisation pour filtrage
