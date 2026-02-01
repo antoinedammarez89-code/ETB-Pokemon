@@ -1,0 +1,112 @@
+from playwright.sync_api import sync_playwright
+import requests
+import traceback
+import os
+import unicodedata
+
+SEARCH_URL = "https://www.maisondelapresse.com/jeux-jouets/cartes-collectionner/cartes-pokemon/boosters-pokemon.html"
+MAX_PRICE = 60
+
+DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
+KEYWORDS = ["coffret", "dresseur", "elite"]  # sans accents pour sécurité
+
+def send_discord_report(products):
+    if not products:
+        print("ℹ️ Aucun produit trouvé sous le prix maximum.")
+        return
+
+    message = "📰 **Maison de la Presse – Coffret Dresseur d'Élite détecté !** 🎉\n\n"
+    for p in products:
+        message += (
+            f"🃏 **{p['nom']}**\n"
+            f"💰 {p['prix']}\n"
+            f"🔗 {p['url']}\n\n"
+        )
+
+    requests.post(DISCORD_WEBHOOK, json={"content": message})
+
+
+def scrape_maison_presse():
+    results = []
+
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(
+                headless=True,
+                args=[
+                    "--disable-blink-features=AutomationControlled",
+                    "--disable-infobars",
+                    "--disable-extensions"
+                ]
+            )
+
+            context = browser.new_context(
+                user_agent=(
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/122.0.0.0 Safari/537.36"
+                ),
+                locale="fr-FR"
+            )
+
+            page = context.new_page()
+            page.goto(SEARCH_URL, timeout=60000)
+            page.wait_for_load_state("networkidle")
+
+            # cliquer sur Accepter les cookies si présent
+            try:
+                page.click("button:has-text('Accepter')", timeout=3000)
+            except:
+                pass
+
+            # récupérer les produits
+            products = page.evaluate("""
+                () => Array.from(document.querySelectorAll('li.item.product.product-item')).map(item => {
+                    const nameEl = item.querySelector('a.product-item-link');
+                    const priceEl = item.querySelector('span.price');
+                    const url = nameEl ? nameEl.href : null;
+
+                    return nameEl && priceEl
+                        ? { nom: nameEl.innerText.trim(), prix: priceEl.innerText.trim(), url: url }
+                        : null;
+                }).filter(Boolean)
+            """)
+
+            for p in products:
+                # nettoyer nom : retirer accents + mettre en minuscule
+                nom_clean = unicodedata.normalize("NFD", p["nom"])
+                nom_clean = "".join(
+                    c for c in nom_clean if unicodedata.category(c) != "Mn"
+                ).lower()
+
+                # filtrer sur les mots clés
+                if not all(k in nom_clean for k in KEYWORDS):
+                    continue
+
+                # convertir prix
+                try:
+                    prix_float = float(
+                        p["prix"].replace("€", "").replace(",", ".").replace("\xa0", "").strip()
+                    )
+                except:
+                    continue
+
+                if prix_float <= MAX_PRICE:
+                    results.append({
+                        "nom": p["nom"],
+                        "prix": p["prix"],
+                        "url": p["url"]
+                    })
+
+            browser.close()
+
+    except Exception as e:
+        print("❌ Erreur scraping :", e)
+        traceback.print_exc()
+
+    return results
+
+
+if __name__ == "__main__":
+    produits = scrape_maison_presse()
+    send_discord_report(produits)
