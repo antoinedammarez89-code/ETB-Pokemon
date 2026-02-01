@@ -1,12 +1,10 @@
 from playwright.sync_api import sync_playwright
-import csv
 import requests
 import traceback
 
 # ---------------- CONFIG ----------------
 SEARCH_QUERY = "Coffret Dresseur d'Elite pokemon"
 MAX_PRICE = 60
-CSV_FILE = "auchan_pokemon_filtered.csv"
 import os
 DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
