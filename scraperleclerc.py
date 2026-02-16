@@ -3,8 +3,8 @@ import requests
 import traceback
 
 # ---------------- CONFIG ----------------
-SEARCH_URL = "https://www.e.leclerc/recherche?q=Coffret%20Dresseur%20d%27Elite%20pokemon#seller_list=group::E.Leclerc"
-SEARCH_QUERY = "Coffret Dresseur d'Elite pokemon"
+SEARCH_URL = "https://www.e.leclerc/recherche?q=Coffret%20Dresseur%20d%27élite%20pokemon#seller_list=group::E.Leclerc"
+SEARCH_QUERY = "Coffret Dresseur d'élite pokemon"
 MAX_PRICE = 60
 import os
 DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
