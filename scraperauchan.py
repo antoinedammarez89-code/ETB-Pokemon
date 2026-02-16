@@ -1,13 +1,13 @@
 from playwright.sync_api import sync_playwright
 import requests
 import traceback
+import os
 
 # ---------------- CONFIG ----------------
-SEARCH_QUERY = "Coffret Dresseur d'Elite pokemon"
+SEARCH_QUERY = "Coffret Dresseur d'élite pokemon"
 MAX_PRICE = 60
-import os
-DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
+DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 keywords = [w.lower() for w in SEARCH_QUERY.split()]
 
 # ---------------- FONCTIONS ----------------
