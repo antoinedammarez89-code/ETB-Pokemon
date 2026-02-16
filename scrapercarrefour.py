@@ -3,8 +3,8 @@ import time
 import requests
 import traceback
 
-SEARCH_QUERY = "Coffret cartes Pokémon Dresseur d'Elite"
-SEARCH_URL = "https://www.carrefour.fr/s?q=Coffret+cartes+Pokémon+Dresseur+d'Elite"
+SEARCH_QUERY = "Coffret cartes Pokémon Dresseur d'élite"
+SEARCH_URL = "https://www.carrefour.fr/s?q=Coffret+cartes+Pokémon+Dresseur+d'élite"
 MAX_PRICE = 60
 INTERVAL_MINUTES = 30
 
@@ -115,3 +115,4 @@ def scrape_carrefour_fast(search_query):
 if __name__ == "__main__":
     produits = scrape_carrefour_fast(SEARCH_QUERY)
     send_discord_report(produits)
+
