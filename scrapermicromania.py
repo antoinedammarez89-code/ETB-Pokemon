@@ -6,7 +6,7 @@ import re
 import os
 
 # ---------------- CONFIG ----------------
-SEARCH_QUERY = "Coffret Dresseur d'Elite pokemon"
+SEARCH_QUERY = "Coffret Dresseur d'élite pokemon"
 MAX_PRICE = 60
 DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
